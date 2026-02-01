@@ -1,4 +1,4 @@
-porque el siguiente codigo se hace render infinitos:import { StatusBar } from 'expo-status-bar';
+Porque el siguiente codigo se hace render infinitos:import { StatusBar } from 'expo-status-bar';
 
 
 import React, { useState, useEffect } from 'react';
@@ -38,7 +38,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>¿La columna "miColumna" existe en "miTabla"?, {respuestaConsulta ? "Sí" : "No"}</Text>
+      
+      <Text>¿La columna "miColumna2" existe en "miTabla"?, {respuestaConsulta ? "Sí" : "No"}</Text>
       <StatusBar style="auto" />
     </View>
   );
