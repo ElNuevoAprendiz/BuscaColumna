@@ -9,14 +9,28 @@ import * as SQLite from 'expo-sqlite';
 
 export default function App() {
 
-  const db = SQLite.openDatabaseSync('miBaseDeDatos.db'); 
+  const db = React.useMemo(
+  () => SQLite.openDatabaseSync('miBaseDeDatos.db'),
+  []
+);
 
   const [respuestaConsulta, setRespuestaConsulta] = useState<boolean>(false);
  
 
   useEffect(() => {
-    setupDatabase();
-  }, []);
+  setupDatabase();
+
+  const resultado = db.getAllSync<{ name: string }>(
+    `PRAGMA table_info(miTabla)`
+  );
+
+  const respuesta = resultado.some(
+    column => column.name === 'miColumna'
+  );
+
+  setRespuestaConsulta(respuesta);
+}, []);
+
 
   const setupDatabase = () => {
     // Ejecutamos un comando SQL: CREATE TABLE IF NOT EXISTS
@@ -29,9 +43,7 @@ export default function App() {
     `);
   };
 
-  const resultado = db.getAllSync<{ name: string }>(`PRAGMA table_info(miTabla)`);
-  const respuesta: boolean = resultado.some(column => column.name === 'miColumna');
-  setRespuestaConsulta(respuesta);
+  
 
   //console.log('¿La columna "miColumna" existe en "miTabla"?', respuestaConsulta); 
   //console.log('Información de las columnas de "miTabla":', resultado);
